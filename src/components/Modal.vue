@@ -5,11 +5,9 @@
       @click:outside="closeDialog"
       scrollable
     >
-      <v-card>
+      <v-card class="dialog">
         <v-card-title v-if="contentLoaded()">
-          <span class="headline">
-            {{ dialog.content.post.title }}
-          </span>
+          {{ dialog.content.post.title }}
         </v-card-title>
         <v-skeleton-loader
           v-else
@@ -24,15 +22,26 @@
           class="skeleton"
           type="text @ 3"
         ></v-skeleton-loader>
+        <h4 v-if="contentLoaded()">
+          Comments ({{ dialog.content.comments.length }})
+        </h4>
+        <div v-for="comment in dialog.content.comments" :key="comment.id">
+          <Comment :comment="comment" />
+        </div>
       </v-card>
     </v-dialog>
 </template>
 
 <script>
+import Comment from './Comment'
+
 export default {
   name: 'Modal',
   props: {
     dialog: Object
+  },
+  components: {
+    Comment
   },
   methods: {
     closeDialog () {
@@ -55,13 +64,20 @@ export default {
 </script>
 
 <style scoped>
-  .headline {
-    text-transform: capitalize;
+  .dialog {
+    padding: 1.5em
   }
   .skeleton {
-    padding: 12px 24px 12px 24px
+    padding: .3em 0 .3em 0;
+  }
+  .v-card__title {
+    padding: 0 !important;
+    text-transform: capitalize;
   }
   .v-card__text {
-    text-transform: unset;
+    padding: .5em 0 .5em 0 !important;
+  }
+  h4 {
+    padding: .75em 0 .75em 0 !important;
   }
 </style>

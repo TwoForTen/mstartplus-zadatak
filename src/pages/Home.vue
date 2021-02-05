@@ -31,7 +31,7 @@
 
 <script>
 import axios from 'axios'
-import Modal from './Modal'
+import Modal from '../components/Modal'
 
 export default {
   name: 'Home',
