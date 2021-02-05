@@ -26,6 +26,6 @@ export default {
 
 <style>
   main {
-    padding-top: 60px !important;
+    padding: 60px 1em 1em 1em !important;
   }
 </style>

@@ -1,38 +1,46 @@
 <template>
-<div class="container">
-  <v-simple-table class="table">
-    <template v-slot:default>
-      <tbody>
-        <tr
-          v-for="post in posts"
-          :key="post.id"
-        >
-          <td>
-            <h3>
-              {{ post.title.split(' ')
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ') }}
-            </h3>
-            <span>
-              by {{ users.length > 0 && users[assignUserToPost(post)].name }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
+  <div class="container">
+    <Modal :dialogOpen.sync="dialogOpen" />
+    <template>
+      <v-simple-table class="table">
+      <template v-slot:default>
+        <tbody>
+          <tr
+            v-for="post in posts"
+            :key="post.id"
+          >
+            <td @click.prevent="dialogOpen=true">
+              <h3>
+                {{ post.title.split(' ')
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ') }}
+              </h3>
+              <span>
+                by {{ users.length > 0 && users[assignUserToPost(post)].name }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
     </template>
-  </v-simple-table>
-</div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Modal from './Modal'
 
 export default {
   name: 'Home',
+  components: {
+    Modal
+  },
   data () {
     return {
       posts: [],
-      users: []
+      users: [],
+      dialogOpen: false
     }
   },
   created () {
@@ -62,7 +70,6 @@ export default {
 
 <style scoped>
   .container {
-    padding: 2em;
     margin: 0 auto;
     max-width: 1260px;
   }
