@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    <Modal :dialogOpen.sync="dialogOpen" />
+  <v-container>
+    <Modal :dialog.sync="dialog" />
+    <h2>Posts</h2>
     <template>
       <v-simple-table class="table">
       <template v-slot:default>
@@ -9,11 +10,12 @@
             v-for="post in posts"
             :key="post.id"
           >
-            <td @click.prevent="dialogOpen=true">
+            <td @click.prevent="() => {
+                dialog.open = true
+                getPostComments(post.id, post, users[assignUserToPost(post)])
+              }">
               <h3>
-                {{ post.title.split(' ')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ') }}
+                {{ post.title }}
               </h3>
               <span>
                 by {{ users.length > 0 && users[assignUserToPost(post)].name }}
@@ -24,7 +26,7 @@
       </template>
     </v-simple-table>
     </template>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -40,13 +42,19 @@ export default {
     return {
       posts: [],
       users: [],
-      dialogOpen: false
+      dialog: {
+        open: false,
+        content: {
+          post: undefined,
+          user: undefined,
+          comments: undefined
+        }
+      }
     }
   },
   created () {
     this.fetchData()
   },
-
   methods: {
     fetchData () {
       const fetchUsers = () =>
@@ -63,6 +71,14 @@ export default {
     },
     assignUserToPost (post) {
       return this.users.findIndex((user) => user.id === post.userId)
+    },
+    getPostComments (postId, post, user) {
+      axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+        .then(({ data }) => {
+          this.dialog.content.comments = data
+          this.dialog.content.post = post
+          this.dialog.content.user = user
+        })
     }
   }
 }
@@ -76,9 +92,13 @@ export default {
   .table {
     width: 100%;
   }
+  h2 {
+    margin: 1.5em 0 .75em 0;
+  }
   h3 {
     color: blue;
     font-weight: normal;
+    text-transform: capitalize;
   }
   span {
     color: rgba(0,0,0,0.5)
