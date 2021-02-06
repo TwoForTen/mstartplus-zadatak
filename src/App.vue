@@ -1,12 +1,14 @@
 <template>
   <v-app>
-    <v-app-bar hide-on-scroll fixed color="blue" height="60">
+    <v-app-bar hide-on-scroll fixed height="60" color="primary" class="appbar">
       <v-container style="display: flex; align-items: center;">
-        <v-toolbar-title>Page title</v-toolbar-title>
+        <v-toolbar-title style="color: #fff;">Page title</v-toolbar-title>
 
         <v-spacer />
-        <router-link to="/">Posts</router-link>
-        <router-link to="/about">Users</router-link>
+        <div class="links">
+          <router-link to="/">Posts</router-link>
+          <router-link to="/users">Users</router-link>
+        </div>
       </v-container>
     </v-app-bar>
     <v-main>
@@ -32,5 +34,13 @@ export default {
   }
   .container {
     max-width: 1260px !important;
+  }
+  a {
+    color: #fff !important;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .links > *:not(:last-child) {
+    margin-right: 2em;
   }
 </style>

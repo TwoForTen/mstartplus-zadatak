@@ -3,7 +3,7 @@
     <Modal :dialog.sync="dialog" />
     <h2>Posts</h2>
     <template>
-      <v-simple-table class="table">
+      <v-simple-table class="table" loading-text="LOADEING">
       <template v-slot:default>
         <tbody>
           <tr
