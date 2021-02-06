@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <Modal :dialog.sync="dialog" />
     <h2>Posts</h2>
     <template>
@@ -26,7 +26,7 @@
       </template>
     </v-simple-table>
     </template>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -85,10 +85,6 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    margin: 0 auto;
-    max-width: 1260px;
-  }
   .table {
     width: 100%;
   }
