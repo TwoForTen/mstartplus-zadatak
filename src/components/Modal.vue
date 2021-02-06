@@ -11,7 +11,7 @@
           </v-btn>
         </div>
         <v-card-title v-if="!dialog.loading">
-          {{ dialog.content.post.title }}
+          {{ dialog.content.post && dialog.content.post.title }}
         </v-card-title>
         <v-skeleton-loader
           v-else
@@ -19,7 +19,7 @@
           type="heading"
         ></v-skeleton-loader>
         <v-card-text v-if="!dialog.loading">
-          {{ dialog.content.post.body }}
+          {{ dialog.content.post && dialog.content.post.body }}
         </v-card-text>
         <v-skeleton-loader
           v-else

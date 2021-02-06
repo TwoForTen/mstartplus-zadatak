@@ -3,7 +3,6 @@
     <v-app-bar hide-on-scroll fixed height="60" color="primary" class="appbar">
       <v-container style="display: flex; align-items: center;">
         <v-toolbar-title style="color: #fff;">Page title</v-toolbar-title>
-
         <v-spacer />
         <div class="links">
           <router-link to="/">Posts</router-link>

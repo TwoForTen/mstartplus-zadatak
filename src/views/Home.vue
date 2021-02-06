@@ -1,7 +1,7 @@
 <template>
   <div>
     <Modal :dialog.sync="dialog" />
-    <h2>Posts</h2>
+    <SectionTitle :title="'Posts'" />
     <template>
       <v-simple-table class="table">
       <template v-slot:default>
@@ -31,12 +31,15 @@
 
 <script>
 import axios from 'axios'
+
 import Modal from '../components/Modal'
+import SectionTitle from '../components/SectionTitle'
 
 export default {
   name: 'Home',
   components: {
-    Modal
+    Modal,
+    SectionTitle
   },
   data () {
     return {
@@ -92,10 +95,6 @@ export default {
 <style scoped>
   .table {
     width: 100%;
-  }
-  h2 {
-    margin: .5em 0 .75em 0;
-    color: rgb(114, 114, 114);
   }
   h3 {
     color: blue;
