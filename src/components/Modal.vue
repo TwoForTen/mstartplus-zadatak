@@ -3,7 +3,6 @@
       v-model="dialog.open"
       max-width="600px"
       @click:outside="closeDialog"
-      scrollable
     >
       <v-card class="dialog">
         <v-card-title v-if="contentLoaded()">
@@ -73,9 +72,12 @@ export default {
   .v-card__title {
     padding: 0 !important;
     text-transform: capitalize;
+    word-break: normal;
   }
   .v-card__text {
     padding: .5em 0 .5em 0 !important;
+    color: rgb(41, 41, 41) !important;
+    overflow: visible !important;
   }
   h4 {
     padding: .75em 0 .75em 0 !important;

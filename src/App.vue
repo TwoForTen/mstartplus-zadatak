@@ -30,7 +30,7 @@ export default {
 
 <style>
   main {
-    padding: 60px 1em 1em 1em !important;
+    padding: 60px .5em .5em .5em !important;
   }
   .container {
     max-width: 1260px !important;

@@ -1,5 +1,5 @@
 <template>
-    <v-list-item two-line class="container">
+    <v-list-item class="container">
         <v-list-item-content v-if="comment.id">
             <v-list-item-title class="comment">{{ comment.body }}</v-list-item-title>
             <v-list-item-subtitle class="comment">{{ comment.email }}</v-list-item-subtitle>
@@ -28,7 +28,6 @@ export default {
         width: 100%;
         border-left: 1px solid blue;
         border-radius: 0 !important;
-        word-wrap: break-word !important;
     }
     .comment{
         white-space: normal;

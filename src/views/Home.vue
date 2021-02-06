@@ -89,7 +89,8 @@ export default {
     width: 100%;
   }
   h2 {
-    margin: 1.5em 0 .75em 0;
+    margin: .5em 0 .75em 0;
+    color: rgb(114, 114, 114);
   }
   h3 {
     color: blue;
