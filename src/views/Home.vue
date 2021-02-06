@@ -3,7 +3,7 @@
     <Modal :dialog.sync="dialog" />
     <h2>Posts</h2>
     <template>
-      <v-simple-table class="table" loading-text="LOADEING">
+      <v-simple-table class="table">
       <template v-slot:default>
         <tbody>
           <tr
@@ -44,6 +44,7 @@ export default {
       users: [],
       dialog: {
         open: false,
+        loading: false,
         content: {
           post: undefined,
           user: undefined,
@@ -67,17 +68,21 @@ export default {
         .then(([users, posts]) => {
           this.users = users.data
           this.posts = posts.data
-        })
+        }).catch(() => {})
     },
     assignUserToPost (post) {
       return this.users.findIndex((user) => user.id === post.userId)
     },
     getPostComments (postId, post, user) {
+      this.dialog.loading = true
       axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
         .then(({ data }) => {
           this.dialog.content.comments = data
           this.dialog.content.post = post
           this.dialog.content.user = user
+          this.dialog.loading = false
+        }).catch(() => {
+          this.dialog.loading = false
         })
     }
   }

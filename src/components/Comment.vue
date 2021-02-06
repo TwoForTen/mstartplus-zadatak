@@ -22,15 +22,15 @@ export default {
 </script>
 
 <style scoped>
-    .container {
-        margin: .3em 0 .3em 0;
-        padding: 0 1em 0 1em;
-        width: 100%;
-        border-left: 1px solid blue;
-        border-radius: 0 !important;
-    }
-    .comment{
-        white-space: normal;
-        text-overflow: initial;
-    }
+  .container {
+      margin: .3em 0 .3em 0;
+      padding: 0 1em 0 1em;
+      width: 100%;
+      border-left: 1px solid blue;
+      border-radius: 0 !important;
+  }
+  .comment{
+      white-space: normal;
+      text-overflow: initial;
+  }
 </style>

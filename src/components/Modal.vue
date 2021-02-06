@@ -10,7 +10,7 @@
               <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
-        <v-card-title v-if="contentLoaded()">
+        <v-card-title v-if="!dialog.loading">
           {{ dialog.content.post.title }}
         </v-card-title>
         <v-skeleton-loader
@@ -18,7 +18,7 @@
           class="skeleton"
           type="heading"
         ></v-skeleton-loader>
-        <v-card-text v-if="contentLoaded()">
+        <v-card-text v-if="!dialog.loading">
           {{ dialog.content.post.body }}
         </v-card-text>
         <v-skeleton-loader
@@ -26,7 +26,7 @@
           class="skeleton"
           type="text @ 3"
         ></v-skeleton-loader>
-        <h4 v-if="contentLoaded()">
+        <h4 v-if="!dialog.loading">
           Comments ({{ dialog.content.comments.length }})
         </h4>
         <div v-for="comment in dialog.content.comments" :key="comment.id">
@@ -63,9 +63,6 @@ export default {
           }
         })
       }, 300)
-    },
-    contentLoaded () {
-      return Boolean(this.dialog.content.post)
     }
   }
 }
