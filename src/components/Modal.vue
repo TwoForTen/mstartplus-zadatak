@@ -5,6 +5,11 @@
       @click:outside="closeDialog"
     >
       <v-card class="dialog">
+        <div class="button__close">
+          <v-btn @click="closeDialog" icon color="pink">
+              <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
         <v-card-title v-if="contentLoaded()">
           {{ dialog.content.post.title }}
         </v-card-title>
@@ -44,19 +49,23 @@ export default {
   },
   methods: {
     closeDialog () {
+      this.$emit('update:dialog', {
+        ...this.dialog,
+        open: false
+      })
       setTimeout(() => {
         this.$emit('update:dialog', {
-          open: false,
+          ...this.dialog,
           content: {
-            post: undefined,
             user: undefined,
-            comments: undefined
+            post: undefined,
+            comments: []
           }
         })
       }, 300)
     },
     contentLoaded () {
-      return Boolean(this.dialog.content.comments)
+      return Boolean(this.dialog.content.post)
     }
   }
 }
@@ -65,6 +74,10 @@ export default {
 <style scoped>
   .dialog {
     padding: 1.5em
+  }
+  .button__close {
+    display: flex;
+    justify-content: flex-end;
   }
   .skeleton {
     padding: .3em 0 .3em 0;

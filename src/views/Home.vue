@@ -47,7 +47,7 @@ export default {
         content: {
           post: undefined,
           user: undefined,
-          comments: undefined
+          comments: []
         }
       }
     }
