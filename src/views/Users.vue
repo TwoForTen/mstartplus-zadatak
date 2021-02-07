@@ -50,8 +50,8 @@ export default {
       users: [],
       amount: 10,
       headers: [
-        { text: 'ID', align: 'left', value: 'id' },
-        { text: 'Avatar', align: 'left', value: 'avatar', sortable: false },
+        { text: 'ID', value: 'id' },
+        { text: 'Avatar', value: 'avatar', sortable: false },
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' }
       ],

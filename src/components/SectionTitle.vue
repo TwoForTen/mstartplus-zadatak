@@ -1,5 +1,5 @@
 <template>
-    <h2>{{ title }}</h2>
+    <h2 class="mt-4 mb-4 text--disabled">{{ title }}</h2>
 </template>
 
 <script>
@@ -10,10 +10,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-    h2 {
-      margin: .5em 0 .75em 0;
-      color: rgb(114, 114, 114);
-    }
-</style>

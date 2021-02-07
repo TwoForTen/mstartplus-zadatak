@@ -1,5 +1,5 @@
 <template>
-  <v-list-item class="container">
+  <v-list-item class="my-4 px-4 container">
     <v-list-item-content v-if="comment.id">
       <v-list-item-title class="comment">{{ comment.body }}</v-list-item-title>
       <v-list-item-subtitle class="comment">{{ comment.email }}</v-list-item-subtitle>
@@ -23,11 +23,7 @@ export default {
 
 <style scoped>
   .container {
-    margin: .3em 0 .3em 0;
-    padding: 0 1em 0 1em;
-    width: 100%;
-    border-left: 1px solid blue;
-    border-radius: 0 !important;
+    border-left: 1px solid var(--v-primary-base);
   }
   .comment{
     white-space: normal;

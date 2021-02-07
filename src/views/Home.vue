@@ -3,21 +3,24 @@
     <Modal :dialog.sync="dialog" />
     <SectionTitle :title="'Posts'" />
     <template>
-      <v-simple-table class="table">
+      <v-simple-table>
       <template v-slot:default>
         <tbody>
           <tr
             v-for="post in posts"
             :key="post.id"
           >
-            <td @click.prevent="() => {
+            <td @click="() => {
                 dialog.open = true
                 getPostComments(post.id, post, users[assignUserToPost(post)])
-              }">
-              <h3>
+              }"
+              class="py-3"
+              style="cursor: pointer;"
+              >
+              <h3 class="primary--text font-weight-regular text-capitalize">
                 {{ post.title }}
               </h3>
-              <span>
+              <span class="text--secondary">
                 by {{ users.length > 0 && users[assignUserToPost(post)].name }}
               </span>
             </td>
@@ -91,22 +94,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .table {
-    width: 100%;
-  }
-  h3 {
-    color: blue;
-    font-weight: normal;
-    text-transform: capitalize;
-  }
-  span {
-    color: rgba(0,0,0,0.5)
-  }
-  td {
-    padding-top: 1em !important;
-    padding-bottom: 1em !important;
-    cursor: pointer;
-  }
-</style>
