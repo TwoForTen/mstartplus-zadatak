@@ -42,13 +42,15 @@ import Comment from './Comment'
 export default {
   name: 'Modal',
   props: {
-    dialog: Object
+    dialog: Object,
+    request: Object
   },
   components: {
     Comment
   },
   methods: {
     closeDialog () {
+      this.request.cancel()
       this.$emit('update:dialog', {
         ...this.dialog,
         open: false

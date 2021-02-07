@@ -1,34 +1,39 @@
 <template>
   <div>
-    <Modal :dialog.sync="dialog" />
     <SectionTitle :title="'Posts'" />
-    <template>
-      <v-simple-table>
-      <template v-slot:default>
-        <tbody>
-          <tr
-            v-for="post in posts"
-            :key="post.id"
-          >
-            <td @click="() => {
-                dialog.open = true
-                getPostComments(post.id, post, users[assignUserToPost(post)])
-              }"
-              class="py-3"
-              style="cursor: pointer;"
-              >
-              <h3 class="primary--text font-weight-regular text-capitalize">
-                {{ post.title }}
-              </h3>
-              <span class="text--secondary">
-                by {{ users.length > 0 && users[assignUserToPost(post)].name }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
+    <div v-if="loading" class="text-center pa-6">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
+    <div v-else>
+      <Modal :dialog.sync="dialog" :request="request" />
+      <template>
+        <v-simple-table>
+        <template v-slot:default>
+          <tbody>
+            <tr
+              v-for="post in posts"
+              :key="post.id"
+            >
+              <td @click="() => {
+                  dialog.open = true
+                  getPostComments(post.id, post, users[assignUserToPost(post)])
+                }"
+                class="py-3"
+                style="cursor: pointer;"
+                >
+                <h3 class="primary--text font-weight-regular text-capitalize">
+                  {{ post.title }}
+                </h3>
+                <span class="text--secondary">
+                  by {{ users.length > 0 && users[assignUserToPost(post)].name }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
       </template>
-    </v-simple-table>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -48,6 +53,8 @@ export default {
     return {
       posts: [],
       users: [],
+      loading: false,
+      request: null,
       dialog: {
         open: false,
         loading: false,
@@ -64,6 +71,8 @@ export default {
   },
   methods: {
     fetchData () {
+      this.loading = true
+
       const fetchUsers = () =>
         axios.get('https://jsonplaceholder.typicode.com/users')
 
@@ -74,14 +83,21 @@ export default {
         .then(([users, posts]) => {
           this.users = users.data
           this.posts = posts.data
-        }).catch(() => {})
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
+        })
     },
     assignUserToPost (post) {
       return this.users.findIndex((user) => user.id === post.userId)
     },
     getPostComments (postId, post, user) {
       this.dialog.loading = true
-      axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+      this.request = axios.CancelToken.source()
+
+      axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`, {
+        cancelToken: this.request.token
+      })
         .then(({ data }) => {
           this.dialog.content.comments = data
           this.dialog.content.post = post
