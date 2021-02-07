@@ -19,11 +19,7 @@
       </v-container>
     </v-main>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-    >
+    <v-navigation-drawer v-model="drawer" fixed temporary>
       <v-list nav dense>
         <v-list-item to="/" exact active-class="primary--text">
           <v-list-item-title>Posts</v-list-item-title>
