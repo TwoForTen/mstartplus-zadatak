@@ -4,7 +4,7 @@
       <v-container class="d-flex align-center">
         <v-row class="d-flex align-center">
           <v-app-bar-nav-icon class="d-sm-none" style="color: #fff;" @click.prevent="drawer = !drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title style="color: #fff;">mStart Plus Zadatak</v-toolbar-title>
+          <v-toolbar-title style="color: #fff;"><router-link to="/">mStart Plus Zadatak</router-link></v-toolbar-title>
         </v-row>
         <v-spacer />
         <div class="links d-none d-sm-block">
