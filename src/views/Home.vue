@@ -11,12 +11,12 @@
         <template v-slot:default>
           <tbody>
             <tr
-              v-for="post in posts"
+              v-for="post in displayedPosts"
               :key="post.id"
             >
               <td @click="() => {
                   dialog.open = true
-                  getPostComments(post.id, post, users[assignUserToPost(post)])
+                  getPostComments(post.id, post)
                 }"
                 class="py-3"
                 style="cursor: pointer;"
@@ -33,6 +33,7 @@
         </template>
       </v-simple-table>
       </template>
+      <v-pagination v-model="page" @input="paginate()" :length="Math.ceil(allPosts.length / POSTS_PER_PAGE)"></v-pagination>
     </div>
   </div>
 </template>
@@ -43,6 +44,8 @@ import axios from 'axios'
 import Modal from '../components/Modal'
 import SectionTitle from '../components/SectionTitle'
 
+const POSTS_PER_PAGE = 10
+
 export default {
   name: 'Home',
   components: {
@@ -51,16 +54,17 @@ export default {
   },
   data () {
     return {
-      posts: [],
+      allPosts: [],
+      displayedPosts: [],
       users: [],
       loading: false,
       request: null,
+      page: 1,
       dialog: {
         open: false,
         loading: false,
         content: {
           post: undefined,
-          user: undefined,
           comments: []
         }
       }
@@ -68,6 +72,7 @@ export default {
   },
   created () {
     this.fetchData()
+    this.POSTS_PER_PAGE = POSTS_PER_PAGE
   },
   methods: {
     fetchData () {
@@ -82,8 +87,9 @@ export default {
       Promise.all([fetchUsers(), fetchPosts()])
         .then(([users, posts]) => {
           this.users = users.data
-          this.posts = posts.data
+          this.allPosts = posts.data
           this.loading = false
+          this.paginate()
         }).catch(() => {
           this.loading = false
         })
@@ -91,7 +97,10 @@ export default {
     assignUserToPost (post) {
       return this.users.findIndex((user) => user.id === post.userId)
     },
-    getPostComments (postId, post, user) {
+    paginate () {
+      this.displayedPosts = this.allPosts.slice((this.page - 1) * this.POSTS_PER_PAGE, ((this.page - 1) * this.POSTS_PER_PAGE) + this.POSTS_PER_PAGE)
+    },
+    getPostComments (postId, post) {
       this.dialog.loading = true
       this.request = axios.CancelToken.source()
 
@@ -101,7 +110,6 @@ export default {
         .then(({ data }) => {
           this.dialog.content.comments = data
           this.dialog.content.post = post
-          this.dialog.content.user = user
           this.dialog.loading = false
         }).catch(() => {
           this.dialog.loading = false

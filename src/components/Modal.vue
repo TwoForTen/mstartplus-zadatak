@@ -59,7 +59,6 @@ export default {
         this.$emit('update:dialog', {
           ...this.dialog,
           content: {
-            user: undefined,
             post: undefined,
             comments: []
           }
