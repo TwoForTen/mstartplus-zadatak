@@ -6,6 +6,8 @@
       :items="users"
       class="elevation-1"
       hide-default-footer
+      :loading="loading"
+      loading-text="Fetching users... Please wait."
   >
     <template v-slot:[`item.avatar`]="{ item }">
       <div class="py-2">
@@ -52,7 +54,8 @@ export default {
         { text: 'Avatar', align: 'left', value: 'avatar', sortable: false },
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' }
-      ]
+      ],
+      loading: false
     }
   },
   created () {
@@ -60,6 +63,7 @@ export default {
   },
   methods: {
     fetchUsers (amount) {
+      this.loading = true
       axios.get(`https://jsonplaceholder.typicode.com/users?_limit=${amount}`)
         .then(({ data }) => {
           this.users = data.map((user, i) => {
@@ -68,8 +72,11 @@ export default {
               avatar: require(`../assets/${i}.png`)
             }
           })
+          this.loading = false
         })
-        .catch(() => {})
+        .catch(() => {
+          this.loading = false
+        })
     }
   }
 }
