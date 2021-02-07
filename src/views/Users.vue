@@ -8,7 +8,7 @@
       hide-default-footer
   >
     <template v-slot:[`item.avatar`]="{ item }">
-      <div class="row_height">
+      <div class="py-2">
         <v-avatar>
         <div class="img__container">
           <img
@@ -18,6 +18,17 @@
           </div>
         </v-avatar>
       </div>
+    </template>
+    <template v-slot:top>
+      <v-container>
+        <v-select
+          class="pa-1 font-weight-bold"
+          :items="[1,2,3,4,5,6,7,8,9,10]"
+          label="Users Amount"
+          v-model="amount"
+          @change="fetchUsers(amount)"
+        ></v-select>
+      </v-container>
     </template>
   </v-data-table>
   </div>
@@ -35,6 +46,7 @@ export default {
   data () {
     return {
       users: [],
+      amount: 10,
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
         { text: 'Avatar', align: 'left', value: 'avatar', sortable: false },
@@ -44,10 +56,10 @@ export default {
     }
   },
   created () {
-    this.fetchUsers()
+    this.fetchUsers(this.amount)
   },
   methods: {
-    fetchUsers (amount = 10) {
+    fetchUsers (amount) {
       axios.get(`https://jsonplaceholder.typicode.com/users?_limit=${amount}`)
         .then(({ data }) => {
           this.users = data.map((user, i) => {
@@ -66,10 +78,6 @@ export default {
 <style lang="scss" scoped>
   .img__container {
     object-fit: cover;
-    padding: 1em 0 1em 0;
-  }
-  .row_height {
-    padding: .75em 0 .75em 0;
   }
   img {
     height: 100%;
