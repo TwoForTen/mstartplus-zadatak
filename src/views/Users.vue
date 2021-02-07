@@ -8,6 +8,7 @@
       hide-default-footer
       :loading="loading"
       loading-text="Fetching users... Please wait."
+      no-data-text="No users available"
   >
     <template v-slot:[`item.avatar`]="{ item }">
       <div class="py-2">
@@ -25,7 +26,7 @@
       <v-container>
         <v-select
           class="pa-1 font-weight-bold"
-          :items="[1,2,3,4,5,6,7,8,9,10]"
+          :items="Array.from(Array(MAX_USERS + 1).keys())"
           label="Users Amount"
           v-model="amount"
           @change="fetchUsers(amount)"
@@ -40,6 +41,8 @@
 import axios from 'axios'
 import SectionTitle from '../components/SectionTitle'
 
+const MAX_USERS = 10
+
 export default {
   name: 'Users',
   components: {
@@ -48,7 +51,7 @@ export default {
   data () {
     return {
       users: [],
-      amount: 10,
+      amount: MAX_USERS,
       headers: [
         { text: 'ID', value: 'id' },
         { text: 'Avatar', value: 'avatar', sortable: false },
@@ -60,6 +63,7 @@ export default {
   },
   created () {
     this.fetchUsers(this.amount)
+    this.MAX_USERS = MAX_USERS
   },
   methods: {
     fetchUsers (amount) {
