@@ -1,14 +1,9 @@
 <template>
   <v-list-item class="my-4 px-4 container">
-    <v-list-item-content v-if="comment.id">
+    <v-list-item-content>
       <v-list-item-title class="comment">{{ comment.body }}</v-list-item-title>
       <v-list-item-subtitle class="comment">{{ comment.email }}</v-list-item-subtitle>
     </v-list-item-content>
-    <v-skeleton-loader
-      v-else
-      class="skeleton"
-      type="text @ 4"
-    ></v-skeleton-loader>
   </v-list-item>
 </template>
 
